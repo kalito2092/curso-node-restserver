@@ -3,13 +3,14 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const app = express();
 const Usuario = require('../models/usuario');
+const { verificaToken, verificaRolAdmin } = require('../middlewares/autenticacion');
 
 
 app.get('/', function(req, res) {
     res.json('Hello World')
 })
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, function(req, res) {
 
     let start = Number(req.query.start) || 0;
     let limit = Number(req.query.limit) || 5;
@@ -39,7 +40,7 @@ app.get('/usuario', function(req, res) {
 
 })
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaRolAdmin], function(req, res) {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -66,7 +67,7 @@ app.post('/usuario', function(req, res) {
 
 })
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaRolAdmin], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'rol', 'estado']);
 
@@ -90,7 +91,7 @@ app.put('/usuario/:id', function(req, res) {
 
 })
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaRolAdmin], function(req, res) {
 
     let id = req.params.id;
 
