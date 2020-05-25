@@ -6,9 +6,9 @@ const Usuario = require('../models/usuario');
 const { verificaToken, verificaRolAdmin } = require('../middlewares/autenticacion');
 
 
-app.get('/', function(req, res) {
+/*app.get('/', function(req, res) {
     res.json('Hello World')
-})
+})*/
 
 app.get('/usuario', verificaToken, function(req, res) {
 
