@@ -13,4 +13,11 @@ app.use(require('./categoria'));
 //añade las rutas de producto.js
 app.use(require('./producto'));
 
+//añade las rutas de upload.js
+app.use(require('./upload'));
+
+//añade las rutas de imagenes.js
+app.use(require('./imagenes'));
+
+
 module.exports = app;
